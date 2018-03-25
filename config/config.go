@@ -79,6 +79,9 @@ func checkConfig() {
 	if viper.GetBool("alerts.slack.enabled") && len(viper.GetString("alerts.slack.webhook.url")) == 0 {
 		log.Fatal(errors.New("slack is enabled but the url not set"))
 	}
+	if viper.GetBool("alerts.discord.enabled") && len(viper.GetString("alerts.discord.webhook.url")) == 0 {
+		log.Fatal(errors.New("discord is enabled but the url not set"))
+	}
 }
 
 func registerSIGHUP() {
