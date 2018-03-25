@@ -27,14 +27,14 @@ import (
 	"time"
 )
 
-func SlackAlert(session parser.Session) {
+func slackAlert(session parser.Session) {
 	attachment := slack.Attachment{}
 	attachment.AddField(
 		slack.Field{Title: "User", Value: session.User(), Short: true}).AddField(
 		slack.Field{Title: "IP", Value: session.IP(), Short: true}).AddField(
 		slack.Field{Title: "Host", Value: session.Host(), Short: true}).AddField(
 		slack.Field{Title: "Time", Value: session.Time().Format(time.Stamp), Short: true})
-	color := "#ffcc00"
+	color := viper.GetString("alerts.slack.webhook.color")
 	attachment.Color = &color
 	payload := slack.Payload{
 		Text:        "`" + session.User() + "` logged in on `" + session.Host() + "`" + " from <https://whois.domaintools.com/" + session.IP() + "|" + session.IP() + ">",

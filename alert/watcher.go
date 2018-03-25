@@ -27,7 +27,8 @@ import (
 )
 
 func Watch() {
-	t, err := tail.TailFile(viper.GetString("source_log"), tail.Config{Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: 2}})
+	log.Info("Watching file '" + viper.GetString("source_log") + "'...")
+	t, err := tail.TailFile(viper.GetString("source_log"), tail.Config{Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: 2}, Logger: tail.DiscardingLogger})
 	defer t.Cleanup()
 	for line := range t.Lines {
 		session := parser.ParseLine(line.Text)

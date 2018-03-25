@@ -17,19 +17,28 @@
  * along with LoginNotifier. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package main
+package util
 
 import (
-	"github.com/DerEnderKeks/LoginNotifier/config"
-	"github.com/DerEnderKeks/LoginNotifier/alert"
-	"github.com/DerEnderKeks/LoginNotifier/log"
+	"regexp"
+	"strconv"
 )
 
-func init() {
-	config.Init()
-	log.Info("Config loaded.")
+type Color struct {
+	R, G, B uint8
 }
 
-func main() {
-	alert.Watch()
+func HexToRGB(color string) (*Color) {
+	hexRegex := regexp.MustCompile(`(?i)^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$`)
+	result := hexRegex.FindStringSubmatch(color)
+	if len(result) < 4 {
+		return nil
+	}
+	r, err := strconv.ParseUint(result[1], 16, 8)
+	g, err := strconv.ParseUint(result[2], 16, 8)
+	b, err := strconv.ParseUint(result[3], 16, 8)
+	if err != nil {
+		return nil
+	}
+	return &Color{R: uint8(r), G: uint8(g), B: uint8(b)}
 }

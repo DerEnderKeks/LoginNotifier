@@ -28,6 +28,10 @@ import (
 func Alert(session parser.Session) {
 	if viper.GetBool("alerts.slack.enabled") {
 		log.Debug("Sending Slack alert...")
-		SlackAlert(session)
+		slackAlert(session)
+	}
+	if viper.GetBool("alerts.discord.enabled") {
+		log.Debug("Sending Discord alert...")
+		discordAlert(session)
 	}
 }

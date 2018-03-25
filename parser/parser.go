@@ -65,7 +65,7 @@ func (s Session) Time() time.Time {
 }
 
 func (s Session) String() string {
-	return s.User() + ", " + s.IP() + ", " + s.Host() + ", " + s.Time().Format(time.ANSIC)
+	return s.User() + ", " + s.IP() + ", " + s.Host() + ", " + s.Time().Format(time.Stamp)
 }
 
 var pubkeyRegex = regexp.MustCompile(`^(?P<time>([A-Z][a-z]{2}) [0-9]{2} ([0-9]{2}:){2}[0-9]{2}) (?P<host>\w+) (\w+\[[0-9]+]:) (Accepted publickey for) (?P<user>\w+) (from) (?P<ip>(\w\.?)+)+`)

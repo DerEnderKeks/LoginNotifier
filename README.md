@@ -15,12 +15,17 @@ In case the file doesn't exist it will be created during startup.
 
 Currently supported platforms:
 - Slack
+- Discord
 
 To enable alerts for a specific platform set the config option `alerts.<platform>.enabled` to `true`.
 
 ### Slack
 
 To use Slack alerts you have to specify the [Webhook URL](https://my.slack.com/services/new/incoming-webhook/), the channel name, the username for the alerts and an icon emoji. You can find more information about Slack Webhooks [here](https://api.slack.com/incoming-webhooks).
+
+### Discord
+
+To use Discord alerts you have to specify the Webhook URL, the username for the alerts and an avatar url. You can find more information about Discord Webhooks [here](https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks).
 
 ## Log file
 

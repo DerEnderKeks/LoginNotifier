@@ -57,13 +57,22 @@ func Init() {
 }
 
 func setDefaults() {
+	viper.SetDefault("loglevel", log.LevelInfo.ID)
 	viper.SetDefault("source_log", "/var/log/auth.log")
-	viper.SetDefault("alerts.slack.enable", "false")
+	// Slack
+	viper.SetDefault("alerts.slack.enabled", "false")
 	viper.SetDefault("alerts.slack.webhook.url", "")
 	viper.SetDefault("alerts.slack.webhook.channel", "#general")
 	viper.SetDefault("alerts.slack.webhook.username", "LoginNotifier")
 	viper.SetDefault("alerts.slack.webhook.icon_emoji", ":key:")
-	viper.SetDefault("loglevel", log.LevelInfo.ID)
+	viper.SetDefault("alerts.slack.webhook.color", "#6100ff")
+	// Discord
+	viper.SetDefault("alerts.discord.enabled", "false")
+	viper.SetDefault("alerts.discord.webhook.url", "")
+	viper.SetDefault("alerts.discord.webhook.username", "LoginNotifier")
+	viper.SetDefault("alerts.discord.webhook.avatar_url", "https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f511.png")
+	viper.SetDefault("alerts.discord.webhook.tts", false)
+	viper.SetDefault("alerts.discord.webhook.color", "#6100ff")
 }
 
 func checkConfig() {
