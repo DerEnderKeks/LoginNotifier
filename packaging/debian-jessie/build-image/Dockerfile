@@ -5,7 +5,7 @@ RUN apt-get update; apt install -y wget git upx
 ARG GOLANG_VERSION
 
 RUN set -eux; \
-	wget -O go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz"; \
+	wget -q -O go.tgz "https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz"; \
 	tar -C /usr/local -xzf go.tgz; \
 	rm go.tgz;
 
