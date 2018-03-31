@@ -1,6 +1,6 @@
 FROM alanfranz/fwd-debian-jessie:latest
 LABEL maintainer="DerEnderKeks"
-RUN apt-get update; apt install -y wget git upx
+RUN apt-get update; apt-get install -y wget git upx
 
 ARG GOLANG_VERSION
 
