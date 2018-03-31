@@ -12,6 +12,7 @@ script:
   - "./packaging/buildall.sh"
 deploy:
   - provider: releases
+    skip_cleanup: true
     api_key:
       secure: opO/onnmoJizSruKHJWnnDcDAJ7dYqCaIj+ssaD0QZwbCyj4oSIeY5AVq4xTaWOlnDZQxL8cCFf4oAKQVtIwS89bhZsEtbxixFWGWGbkLu8mg6Dv4wpUdvb8Mhp3NP0ZT/p0uuWW2cFJ6C94ZzMFWHgNtoXZlmZgHu2VBesyeEqqHJGHMiZ0sE/JvS447NNrBx47jcmidz2V2S6s3oXPFihCZ+fzVDi9lKF11k6ZvUG3A0YVPNaRYZuplQYP6H1CtHGMraXROpCr27ZkcVqh9kU58+RCjJ9HSgzqGwu8lNjrCzCWw5JHVYIbS8Wex4oODVIk2jIP08TCjYbRFdNV/1xTb4pI9yL4FOL9P0KAiP6hnkL3FyGQvd6W+I4t9zwVH1ZcJZ7IK/v9r72BGCDOzM/643NHYhWacuUNvUFu18XWNOmXUadO11qY0SQ0hB+Db7/3Kq8clf+7DFRL+RAT6mItu2voBaF00hLDY2qh42u8+y4JF8VyqvIacuGF0OtQlOkMMJgm1CBzG6qMaYliTL+01bNLHnzWkRfNevhYZYjTqXNQoN3nJN4zkDfe/riu14yuCjimgHaheZYUeL9oZXSgv7Yxg5iJU90PJjSxM85wUfXy3Ot7N2Q3ilE+eEkI1Qsez6GWehHlT1uKC+UBDqtdurjyT7dGOR5vYrI0iOk=
     file_glob: true
