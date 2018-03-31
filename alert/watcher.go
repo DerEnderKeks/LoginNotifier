@@ -28,9 +28,14 @@ import (
 
 func Watch() {
 	log.Info("Watching file '" + viper.GetString("source_log") + "'...")
-	t, err := tail.TailFile(viper.GetString("source_log"), tail.Config{Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: 2}, Logger: tail.DiscardingLogger})
+	tailLogger := tail.DiscardingLogger
+	if viper.GetInt("loglevel") > 3{
+		tailLogger = tail.DefaultLogger
+	}
+	t, err := tail.TailFile(viper.GetString("source_log"), tail.Config{Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: 2}, Logger: tailLogger})
 	defer t.Cleanup()
 	for line := range t.Lines {
+		log.Debug("New line: '" + line.Text + "'")
 		session := parser.ParseLine(line.Text)
 		if session != nil {
 			Alert(*session)

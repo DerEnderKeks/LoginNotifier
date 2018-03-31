@@ -6,6 +6,8 @@ packaging/*/out
 
 main
 main.exe
+LoginNotifier
+LoginNotifier.exe
 
 !.gitignore
 !.travis.yml

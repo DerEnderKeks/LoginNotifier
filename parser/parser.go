@@ -68,7 +68,7 @@ func (s Session) String() string {
 	return s.User() + ", " + s.IP() + ", " + s.Host() + ", " + s.Time().Format(time.Stamp)
 }
 
-var pubkeyRegex = regexp.MustCompile(`^(?P<time>([A-Z][a-z]{2}) [0-9]{2} ([0-9]{2}:){2}[0-9]{2}) (?P<host>\w+) (\w+\[[0-9]+]:) (Accepted publickey for) (?P<user>\w+) (from) (?P<ip>(\w\.?)+)+`)
+var pubkeyRegex = regexp.MustCompile(`^(?P<time>([A-Z][a-z]{2})\s+[0-9]{1,2}\s+([0-9]{2}:){2}[0-9]{2})\s+(?P<host>\w+)\s+(\w+\[[0-9]+]:)\s+(Accepted publickey for) (?P<user>\w+) (from) (?P<ip>(\w\.?)+)+`)
 
 func ParseLine(line string) (*Session) {
 	var session Session
