@@ -1,4 +1,4 @@
-# LoginNotifier
+# LoginNotifier [![Build Status](https://travis-ci.org/DerEnderKeks/LoginNotifier.svg?branch=master)](https://travis-ci.org/DerEnderKeks/LoginNotifier)
 
 This program notifies you of successful SSH login attempts. It parses the `/var/log/auth.log` file and sends you an alert via the supported platforms containing the user and source IP address.
 
