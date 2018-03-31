@@ -1,0 +1,15 @@
+#!/bin/bash -ex
+trap 'chown -R --reference /build-inside/build-package /out/' EXIT
+
+echo "Building .deb package..."
+
+TARGET=${GOPATH}/src/${FULLNAME}
+mkdir -p ${TARGET}
+rsync -a /source/* ${TARGET}/
+cd ${TARGET}
+make
+make upx
+make install
+
+cd /out
+fpm -t deb -s dir -n ${NAME} --version ${VERSION} --description "${DESCRIPTION}" --url "${URL}" --license "${LICENSE}" --vendor "${VENDOR}" --maintainer "${MAINTAINER}" -C / /usr/bin/${NAME} /etc/systemd/system/${NAME}.service

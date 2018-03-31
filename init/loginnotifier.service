@@ -1,0 +1,12 @@
+[Unit]
+Description=LoginNotifier
+Requires=networking.service
+After=networking.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/loginnotifier
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

@@ -17,21 +17,13 @@
  * along with LoginNotifier. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package alert
+package util
 
-import (
-	"github.com/spf13/viper"
-	"github.com/DerEnderKeks/LoginNotifier/parser"
-	"github.com/DerEnderKeks/LoginNotifier/log"
-)
+import "os"
 
-func Alert(session parser.Session) {
-	if viper.GetBool("alerts.slack.enabled") {
-		log.Debug("Sending Slack alert...")
-		slackAlert(session)
-	}
-	if viper.GetBool("alerts.discord.enabled") {
-		log.Debug("Sending Discord alert...")
-		discordAlert(session)
-	}
+func Exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil { return true, nil }
+	if os.IsNotExist(err) { return false, nil }
+	return true, err
 }

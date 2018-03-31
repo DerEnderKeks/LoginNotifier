@@ -4,16 +4,16 @@
  * This file is part of LoginNotifier.
  *
  * LoginNotifier is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * LoginNotifier is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
+ * You should have received a copy of the GNU General Public License
  * along with LoginNotifier. If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -27,31 +27,46 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"github.com/DerEnderKeks/LoginNotifier/util"
+	"path/filepath"
 )
 
 func Init() {
-	pflag.String("config", "", "Path to the config file")
+	configPath := pflag.String("config", "/etc/loginnotifier/config.json", "Path to the config file")
+	generateConfig := pflag.Bool("generate-config", false, "Generate the config file and exit")
 	pflag.Parse()
 
-	viper.BindPFlags(pflag.CommandLine)
-
-	viper.SetConfigName("config")
 	viper.SetConfigType("json")
-	viper.AddConfigPath("/etc/loginnotifier")
-
-	if viper.GetString("config") != "" {
-		viper.SetConfigFile(viper.GetString("config"))
-	}
+	viper.SetConfigFile(*configPath)
 
 	setDefaults()
 
-	err := viper.ReadInConfig()
+	exists, err := util.Exists(*configPath)
 	if err != nil {
 		log.Warning(err)
+		err = nil
+	}
+
+	if !exists {
+		err = os.MkdirAll(filepath.Dir(*configPath), 0755)
+		if err != nil {
+			log.Warning(err)
+			err = nil
+		}
+	}
+
+	err = viper.ReadInConfig()
+	if err != nil {
+		if !(os.IsNotExist(err) && *generateConfig) {
+			log.Warning(err)
+		}
 	}
 
 	viper.AutomaticEnv()
 	viper.WriteConfig()
+	if *generateConfig {
+		os.Exit(0)
+	}
 	checkConfig()
 	registerSIGHUP()
 }

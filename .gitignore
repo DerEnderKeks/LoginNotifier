@@ -1,5 +1,11 @@
 .*
 
 testing/
+bin/
+packaging/*/out
+
+main
+main.exe
 
 !.gitignore
+!.travis.yml

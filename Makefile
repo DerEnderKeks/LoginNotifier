@@ -1,0 +1,21 @@
+make: get build
+get:
+	go get
+
+build:
+	go build -o bin/loginnotifier -linkshared -ldflags="-s -w" main.go
+
+upx:
+	upx bin/*
+
+install:
+	cp bin/loginnotifier ${PREFIX}/usr/bin/
+	cp init/loginnotifier.service ${PREFIX}/etc/systemd/system/
+
+uninstall:
+	rm -rf ${PREFIX}/usr/bin/loginnotifier
+	rm -rf ${PREFIX}/etc/systemd/system/loginnotifier.service
+
+clean:
+	go clean
+	rm -rf bin
