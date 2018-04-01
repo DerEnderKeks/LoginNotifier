@@ -74,6 +74,8 @@ func Init() {
 func setDefaults() {
 	viper.SetDefault("loglevel", log.LevelInfo.ID)
 	viper.SetDefault("source_log", "/var/log/auth.log")
+	viper.SetDefault("blacklist.whitelist", false)
+	viper.SetDefault("blacklist.users", []string{})
 	// Slack
 	viper.SetDefault("alerts.slack.enabled", false)
 	viper.SetDefault("alerts.slack.webhook.url", "")
