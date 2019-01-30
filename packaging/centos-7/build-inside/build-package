@@ -14,4 +14,7 @@ make install
 /usr/bin/${NAME} --generate-config
 
 cd /out
-fpm -t rpm -s dir -n ${NAME} --version ${VERSION} --description "${DESCRIPTION}" --url "${URL}" --license "${LICENSE}" --vendor "${VENDOR}" --maintainer "${MAINTAINER}" -C / /usr/bin/${NAME} /etc/${NAME}/config.json /etc/systemd/system/${NAME}.service
+fpm -t rpm -s dir -n ${NAME} --version ${VERSION} --description "${DESCRIPTION}" \
+    --url "${URL}" --license "${LICENSE}" --vendor "${VENDOR}" --maintainer "${MAINTAINER}" \
+    --config-files /etc/${NAME}/config.json \
+    -C / /usr/bin/${NAME} /etc/${NAME}/config.json /etc/systemd/system/${NAME}.service
