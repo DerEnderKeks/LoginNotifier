@@ -33,4 +33,4 @@ By default this program uses the `/var/log/auth.log` file to detect new sessions
 
 # License
 
-[GNU Affero General Public License 3.0](https://www.gnu.org/licenses/agpl-3.0.en.html)
+[GNU General Public License 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
