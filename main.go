@@ -20,8 +20,8 @@
 package main
 
 import (
-	"github.com/DerEnderKeks/LoginNotifier/config"
 	"github.com/DerEnderKeks/LoginNotifier/alert"
+	"github.com/DerEnderKeks/LoginNotifier/config"
 	"github.com/DerEnderKeks/LoginNotifier/log"
 )
 
