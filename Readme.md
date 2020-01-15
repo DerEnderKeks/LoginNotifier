@@ -4,7 +4,7 @@ This program notifies you of successful SSH login attempts. It parses the `/var/
 
 # Installation
 
-> TODO
+You can use the packages (deb/rpm) or the precompiled binary from the [releases](https://github.com/DerEnderKeks/LoginNotifier/releases) section.
 
 # Configuration
 
