@@ -20,28 +20,29 @@
 package alert
 
 import (
-	"github.com/spf13/viper"
-	"github.com/hpcloud/tail"
 	"github.com/DerEnderKeks/LoginNotifier/log"
 	"github.com/DerEnderKeks/LoginNotifier/parser"
+	"github.com/hpcloud/tail"
+	"github.com/spf13/viper"
+	"strings"
 )
 
 func Watch() {
 	log.Info("Watching file '" + viper.GetString("source_log") + "'...")
 	tailLogger := tail.DiscardingLogger
-	if viper.GetInt("loglevel") > 3{
+	if viper.GetInt("loglevel") > 3 {
 		tailLogger = tail.DefaultLogger
 	}
 	t, err := tail.TailFile(viper.GetString("source_log"), tail.Config{Follow: true, ReOpen: true, Location: &tail.SeekInfo{Offset: 0, Whence: 2}, Logger: tailLogger})
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer t.Cleanup()
 	for line := range t.Lines {
-		log.Debug("New line: '" + line.Text + "'")
+		log.Debug("New line: '" + strings.TrimRight(line.Text, "\r\n") + "'")
 		session := parser.ParseLine(line.Text)
 		if session != nil {
 			Alert(*session)
 		}
-	}
-	if err != nil {
-		log.Fatal(err)
 	}
 }
