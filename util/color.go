@@ -28,7 +28,7 @@ type Color struct {
 	R, G, B uint8
 }
 
-func HexToRGB(color string) (*Color) {
+func HexToRGB(color string) *Color {
 	hexRegex := regexp.MustCompile(`(?i)^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$`)
 	result := hexRegex.FindStringSubmatch(color)
 	if len(result) < 4 {

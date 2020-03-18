@@ -20,8 +20,8 @@
 package alert
 
 import (
-	"github.com/DerEnderKeks/LoginNotifier/parser"
 	"github.com/DerEnderKeks/LoginNotifier/log"
+	"github.com/DerEnderKeks/LoginNotifier/parser"
 	"github.com/ashwanthkumar/slack-go-webhook"
 	"github.com/spf13/viper"
 	"time"
@@ -31,13 +31,13 @@ func slackAlert(session parser.Session) {
 	attachment := slack.Attachment{}
 	attachment.AddField(
 		slack.Field{Title: "User", Value: session.User(), Short: true}).AddField(
-		slack.Field{Title: "IP", Value: session.IP(), Short: true}).AddField(
+		slack.Field{Title: "IP", Value: session.IP() + " (" + session.ReverseHost() + ")", Short: true}).AddField(
 		slack.Field{Title: "Host", Value: session.Host(), Short: true}).AddField(
 		slack.Field{Title: "Time", Value: session.Time().Format(time.Stamp), Short: true})
 	color := viper.GetString("alerts.slack.webhook.color")
 	attachment.Color = &color
 	payload := slack.Payload{
-		Text:        "`" + session.User() + "` logged in on `" + session.Host() + "`" + " from <https://whois.domaintools.com/" + session.IP() + "|" + session.IP() + ">",
+		Text:        "`" + session.User() + "` logged in on `" + session.Host() + "`" + " from <https://whois.domaintools.com/" + session.IP() + "|" + session.IP() + "> (" + session.ReverseHost() + ")",
 		Username:    viper.GetString("alerts.slack.webhook.username"),
 		Channel:     viper.GetString("alerts.slack.webhook.channel"),
 		IconEmoji:   viper.GetString("alerts.slack.webhook.icon_emoji"),

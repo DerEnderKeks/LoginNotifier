@@ -21,15 +21,17 @@ package parser
 
 import (
 	"github.com/DerEnderKeks/LoginNotifier/log"
+	"net"
 	"regexp"
 	"time"
 )
 
 type Session struct {
-	user string
-	ip   string
-	host string
-	time time.Time
+	user        string
+	ip          string
+	reverseHost string
+	host        string
+	time        time.Time
 }
 
 func (s *Session) SetUser(user string) {
@@ -46,6 +48,14 @@ func (s *Session) SetIP(ip string) {
 
 func (s Session) IP() string {
 	return s.ip
+}
+
+func (s *Session) SetReverseHost(reverseHost string) {
+	s.reverseHost = reverseHost
+}
+
+func (s Session) ReverseHost() string {
+	return s.reverseHost
 }
 
 func (s *Session) SetHost(host string) {
@@ -91,6 +101,13 @@ func ParseLine(line string) *Session {
 				session.SetUser(match[i])
 			case "ip":
 				session.SetIP(match[i])
+				reverseHosts, err := net.LookupAddr(session.IP())
+				if err != nil {
+					log.Warning(err)
+				} else if len(reverseHosts) > 0 {
+					re := regexp.MustCompile(`\.$`) // remove trailing dot
+					session.SetReverseHost(re.ReplaceAllString(reverseHosts[0], ""))
+				}
 			}
 		}
 	}

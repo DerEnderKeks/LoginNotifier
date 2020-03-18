@@ -20,10 +20,10 @@
 package alert
 
 import (
-	"github.com/spf13/viper"
-	"github.com/DerEnderKeks/LoginNotifier/parser"
 	"github.com/DerEnderKeks/LoginNotifier/log"
+	"github.com/DerEnderKeks/LoginNotifier/parser"
 	"github.com/DerEnderKeks/LoginNotifier/util"
+	"github.com/spf13/viper"
 )
 
 func Alert(session parser.Session) {

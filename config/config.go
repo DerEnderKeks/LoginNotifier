@@ -20,15 +20,15 @@
 package config
 
 import (
-	"github.com/spf13/viper"
-	"github.com/spf13/pflag"
-	"github.com/DerEnderKeks/LoginNotifier/log"
 	"errors"
+	"github.com/DerEnderKeks/LoginNotifier/log"
+	"github.com/DerEnderKeks/LoginNotifier/util"
+	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
 	"os"
 	"os/signal"
-	"syscall"
-	"github.com/DerEnderKeks/LoginNotifier/util"
 	"path/filepath"
+	"syscall"
 )
 
 func Init() {

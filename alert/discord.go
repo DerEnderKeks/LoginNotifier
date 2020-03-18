@@ -21,10 +21,10 @@ package alert
 
 import (
 	"github.com/DerEnderKeks/LoginNotifier/parser"
+	"github.com/DerEnderKeks/LoginNotifier/util"
 	"github.com/noonien/discohook"
 	"github.com/spf13/viper"
 	"time"
-	"github.com/DerEnderKeks/LoginNotifier/util"
 )
 
 func discordAlert(session parser.Session) {
@@ -33,7 +33,7 @@ func discordAlert(session parser.Session) {
 	message.AvatarURL = viper.GetString("alerts.discord.webhook.avatar_url")
 	message.TTS = viper.GetBool("alerts.discord.webhook.tts")
 	userField := discohook.EmbedField{Name: "User", Value: session.User(), Inline: true}
-	ipField := discohook.EmbedField{Name: "IP", Value: "[" + session.IP() + "](https://whois.domaintools.com/" + session.IP() + ")", Inline: true}
+	ipField := discohook.EmbedField{Name: "IP", Value: "[" + session.IP() + "](https://whois.domaintools.com/" + session.IP() + ") (" + session.ReverseHost() + ")", Inline: true}
 	hostField := discohook.EmbedField{Name: "Host", Value: session.Host(), Inline: true}
 	timeField := discohook.EmbedField{Name: "Time", Value: session.Time().Format(time.Stamp), Inline: true}
 	color := util.HexToRGB(viper.GetString("alerts.discord.webhook.color"))
@@ -42,8 +42,8 @@ func discordAlert(session parser.Session) {
 	}
 	message.Embeds = []discohook.Embed{{
 		Description: "`" + session.User() + "` logged in on `" + session.Host() + "`" + " from " + session.IP(),
-		Type: "rich",
-		Color: &discohook.Color{R: color.R, G: color.G, B: color.B},
-		Fields: []discohook.EmbedField{userField, hostField, ipField, timeField}}}
+		Type:        "rich",
+		Color:       &discohook.Color{R: color.R, G: color.G, B: color.B},
+		Fields:      []discohook.EmbedField{userField, hostField, ipField, timeField}}}
 	discohook.Send(viper.GetString("alerts.discord.webhook.url"), &message, false)
 }

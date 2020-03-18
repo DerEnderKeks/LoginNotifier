@@ -21,10 +21,10 @@ package log
 
 import (
 	"fmt"
-	"time"
 	"github.com/getsentry/raven-go"
 	"github.com/spf13/viper"
 	"os"
+	"time"
 )
 
 type logLevel struct {

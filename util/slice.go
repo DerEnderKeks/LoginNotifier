@@ -19,7 +19,7 @@
 
 package util
 
-func Contains(s []string, e  string) bool {
+func Contains(s []string, e string) bool {
 	for _, el := range s {
 		if el == e {
 			return true
