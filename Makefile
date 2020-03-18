@@ -1,9 +1,10 @@
 make: get build
 get:
-	go get
+	go mod download
+	go mod verify
 
 build:
-	go build -o bin/loginnotifier -linkshared -ldflags="-s -w" main.go
+	go build -o bin/loginnotifier -linkshared -ldflags="-s -w"
 
 upx:
 	upx bin/*
