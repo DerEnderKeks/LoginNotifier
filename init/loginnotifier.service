@@ -1,7 +1,7 @@
 [Unit]
 Description=LoginNotifier
-Requires=networking.service
-After=networking.service
+Requires=network.target
+After=network.target
 
 [Service]
 Restart=always
