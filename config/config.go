@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 DerEnderKeks
+ * Copyright (C) 2020 DerEnderKeks
  *
  * This file is part of LoginNotifier.
  *
@@ -74,8 +74,11 @@ func Init() {
 func setDefaults() {
 	viper.SetDefault("loglevel", log.LevelInfo.ID)
 	viper.SetDefault("source_log", "/var/log/auth.log")
-	viper.SetDefault("blacklist.whitelist", false)
-	viper.SetDefault("blacklist.users", []string{})
+	// filters
+	viper.SetDefault("filter.user.whitelist", false)
+	viper.SetDefault("filter.user.list", []string{})
+	viper.SetDefault("filter.ip.whitelist", false)
+	viper.SetDefault("filter.ip.list", []string{})
 	// Slack
 	viper.SetDefault("alerts.slack.enabled", false)
 	viper.SetDefault("alerts.slack.webhook.url", "")
@@ -99,6 +102,15 @@ func checkConfig() {
 	if viper.GetBool("alerts.discord.enabled") && len(viper.GetString("alerts.discord.webhook.url")) == 0 {
 		log.Fatal(errors.New("discord is enabled but the url not set"))
 	}
+
+	if viper.GetBool("filter.user.whitelist") && len(viper.GetStringSlice("filter.user.list")) == 0 {
+		log.Warning(errors.New("user whitelist is enabled but no user listed, you will get no alerts"))
+	}
+	if viper.GetBool("filter.ip.whitelist") && len(viper.GetStringSlice("filter.ip.list")) == 0 {
+		log.Warning(errors.New("ip whitelist is enabled but no ip listed, you will get no alerts"))
+	}
+	util.TestAllRegexs(viper.GetStringSlice("filter.user.list"))
+	util.TestAllNets(viper.GetStringSlice("filter.ip.list"))
 }
 
 func registerSIGHUP() {
